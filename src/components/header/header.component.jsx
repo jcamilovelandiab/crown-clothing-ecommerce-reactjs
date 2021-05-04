@@ -11,8 +11,6 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
 
-import './header.styles.scss';
-
 const Header = ({ currentUser, hiddenCart }) =>(
     <HeaderContainer>
         <LogoContainer to="/">
