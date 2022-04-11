@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -7,7 +7,7 @@ import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
-import Header from './components/header/header.component';
+import Navigation from './components/navigation/navigation.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
 import CheckoutPage from './pages/checkout/checkout.component';
 
@@ -43,22 +43,21 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<Header />
-				<Switch>
-					<Route exact path='/' component={HomePage} />
-					<Route path='/shop' component={ShopPage} />
-					<Route exact path='/checkout' component={CheckoutPage} />
-					<Route
-						exact
-						path='/signin'
-						render={() =>
-							this.props.currentUser ? (
-								<Redirect to='/' />
+				<Routes>
+					<Route path='/' element={<Navigation />}>
+						<Route index element={<HomePage />} />
+						<Route path='shop/*' element={<ShopPage />} />
+						<Route path='checkout' element={<CheckoutPage />} />
+						<Route
+							path='signin'
+							element={this.props.currentUser ? (
+								<Navigate to='/' replace />
 							) : (
-									<SignInAndSignUpPage />
-								)}
-					/>
-				</Switch>
+								<SignInAndSignUpPage />
+							)}
+						/>
+					</Route>
+				</Routes>
 			</div>
 		);
 	}
